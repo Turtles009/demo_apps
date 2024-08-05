@@ -1,3 +1,5 @@
+import 'package:demo_app/screens/employee_list_screen.dart';
+import 'package:demo_app/widgets/body_container.dart';
 import 'package:demo_app/widgets/home_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,24 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final List<CardData> _cards = [
-    CardData(
-      cardName: 'Employee',
-      cardColor: Colors.purple,
-    ),
-    CardData(
-      cardName: 'Expense',
-      cardColor: const Color.fromARGB(255, 231, 84, 133),
-    ),
-    CardData(
-      cardName: 'Payroll',
-      cardColor: Colors.blue,
-    ),
-    CardData(
-      cardName: 'File',
-      cardColor: Colors.green,
-    ),
-  ];
+  late final List<CardData> _cards;
 
   final List<TileData> _tiles = [
     TileData(
@@ -60,10 +45,49 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _cards = [
+      CardData(
+        cardName: 'Employee',
+        cardColor: Colors.purple,
+        callBackHandler: () => pushScreen(
+          // const EmployeeDetailsScreen(
+          //   employeeName: 'Shaidul Islam',
+          //   employeeDesignation: 'Designer',
+          // ),
+          const EmployeeListScreen(),
+        ),
+      ),
+      CardData(
+        cardName: 'Expense',
+        cardColor: const Color.fromARGB(255, 231, 84, 133),
+      ),
+      CardData(
+        cardName: 'Payroll',
+        cardColor: Colors.blue,
+      ),
+      CardData(
+        cardName: 'File',
+        cardColor: Colors.green,
+      ),
+    ];
+  }
+
+  void pushScreen(Widget screen) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => screen,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color(0xff5e7cec),
+      // backgroundColor: const Color(0xff5e7cec),
       appBar: AppBar(
         clipBehavior: Clip.none,
         titleTextStyle: GoogleFonts.poppins(
@@ -73,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 20,
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
+        // iconTheme: const IconThemeData(color: Colors.white),
         // forceMaterialTransparency: true,
-        backgroundColor: const Color(0xff5e7cec),
+        // backgroundColor: const Color(0xff5e7cec),
         leading: AppBarIcon(
           isBadge: false,
           onPressedHandler: () {
@@ -95,79 +119,65 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: const Drawer(),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 24,
-          ),
-          Expanded(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(40),
-                ),
-                color: Colors.white,
-              ),
-              child: Column(
-                children: [
-                  GridView.count(
-                    shrinkWrap: true,
-                    childAspectRatio: 1.1,
-                    crossAxisCount: 2,
-                    padding: const EdgeInsets.all(22),
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    children: _cards
-                        .map(
-                          (card) => HomeCard(
-                            borderColor: card.cardColor,
-                            title: card.cardName,
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  // const SizedBox(height: 10),
-                  Expanded(
-                    child: Material(
-                      elevation: 12,
-                      borderRadius: BorderRadius.circular(40),
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 24.0, horizontal: 20.0),
-                          decoration: const BoxDecoration(
-                            // border: Border(
-                            //   top: BorderSide(
-                            //     color: Colors.black12,
-                            //   ),
-                            //   left: BorderSide(
-                            //     color: Colors.black12,
-                            //   ),
-                            //   right: BorderSide(
-                            //     color: Colors.black12,
-                            //   ),
-                            // ),
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(40),
-                            ),
-                            color: Colors.white,
-                          ),
-                          child: ListView.separated(
-                              itemBuilder: (context, index) => HomeTile(
-                                    title: _tiles[index].tileName,
-                                    tileColor: _tiles[index].tileColor,
-                                    icon: _tiles[index].tileIcon,
-                                  ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 12),
-                              itemCount: _tiles.length)),
+      body: BodyContainer(
+        child: Column(
+          children: [
+            GridView.count(
+              shrinkWrap: true,
+              childAspectRatio: 1.1,
+              crossAxisCount: 2,
+              padding: const EdgeInsets.all(22),
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              physics: const NeverScrollableScrollPhysics(),
+              children: _cards
+                  .map(
+                    (card) => HomeCard(
+                      borderColor: card.cardColor,
+                      title: card.cardName,
+                      onTapHandler: card.callBackHandler,
                     ),
                   )
-                ],
-              ),
+                  .toList(),
             ),
-          ),
-        ],
+            // const SizedBox(height: 10),
+            Expanded(
+              child: Material(
+                elevation: 12,
+                borderRadius: BorderRadius.circular(24),
+                child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24.0, horizontal: 20.0),
+                    decoration: const BoxDecoration(
+                      // border: Border(
+                      //   top: BorderSide(
+                      //     color: Colors.black12,
+                      //   ),
+                      //   left: BorderSide(
+                      //     color: Colors.black12,
+                      //   ),
+                      //   right: BorderSide(
+                      //     color: Colors.black12,
+                      //   ),
+                      // ),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(40),
+                      ),
+                      color: Color.fromARGB(255, 250, 250, 250),
+                    ),
+                    child: ListView.separated(
+                        itemBuilder: (context, index) => HomeTile(
+                              title: _tiles[index].tileName,
+                              tileColor: _tiles[index].tileColor,
+                              icon: _tiles[index].tileIcon,
+                            ),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
+                        itemCount: _tiles.length)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

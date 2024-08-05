@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1",
+    "name": "Shaidul Islam",
+    "role": "Designer",
+    "date": "17 Aug 2021",
+    "inTime": "09:00 AM",
+    "outTime": "05:00 PM",
+    "status": "P",
+    "workedHours": 2.5,
+    "totalHours": 9
+  },
+  {
+    "id": "2",
+    "name": "John Doe",
+    "role": "Developer",
+    "date": "17 Aug 2021",
+    "inTime": "10:00 AM",
+    "outTime": "06:00 PM",
+    "status": "A",
+    "workedHours": 4.5,
+    "totalHours": 9
+  }
+]
