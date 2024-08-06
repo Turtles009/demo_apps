@@ -21,7 +21,7 @@ class EmployeeApi {
     }
   }
 
-  Future<List<double>> fetchChartData(String employeeID) async {
+  Future<Map<String, List<double>>> fetchChartData(String employeeID) async {
     final response = await http.get(Uri.parse('${baseUrl}chart_data.json'));
     await Future.delayed(const Duration(seconds: 2));
     if (response.statusCode == 200) {
@@ -31,7 +31,12 @@ class EmployeeApi {
           (x) => x.toDouble(),
         ),
       );
-      return hours;
+      List<double> week = List<double>.from(
+        data['week'].map(
+          (x) => x.toDouble(),
+        ),
+      );
+      return {'hours': hours, 'week': week};
     } else {
       throw Exception('Failed to load chart data');
     }

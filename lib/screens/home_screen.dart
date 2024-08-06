@@ -1,7 +1,11 @@
+import 'package:demo_app/bloc/theme_bloc/theme_bloc.dart';
+import 'package:demo_app/bloc/theme_bloc/theme_state.dart';
 import 'package:demo_app/screens/employee_list_screen.dart';
+import 'package:demo_app/widgets/app_drawer.dart';
 import 'package:demo_app/widgets/body_container.dart';
 import 'package:demo_app/widgets/home_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/app_bar_icon.dart';
@@ -118,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      drawer: const Drawer(),
+      drawer: const AppDrawer(),
       body: BodyContainer(
         child: Column(
           children: [
@@ -145,35 +149,40 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Material(
                 elevation: 12,
                 borderRadius: BorderRadius.circular(24),
-                child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 24.0, horizontal: 20.0),
-                    decoration: const BoxDecoration(
-                      // border: Border(
-                      //   top: BorderSide(
-                      //     color: Colors.black12,
-                      //   ),
-                      //   left: BorderSide(
-                      //     color: Colors.black12,
-                      //   ),
-                      //   right: BorderSide(
-                      //     color: Colors.black12,
-                      //   ),
-                      // ),
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(40),
+                child: BlocBuilder<ThemeBloc, ThemeState>(
+                    builder: (context, state) {
+                  return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 24.0, horizontal: 20.0),
+                      decoration: BoxDecoration(
+                        // border: Border(
+                        //   top: BorderSide(
+                        //     color: Colors.black12,
+                        //   ),
+                        //   left: BorderSide(
+                        //     color: Colors.black12,
+                        //   ),
+                        //   right: BorderSide(
+                        //     color: Colors.black12,
+                        //   ),
+                        // ),
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(24),
+                        ),
+                        color: state.themeMode == ThemeMode.dark
+                            ? Colors.grey.shade700
+                            : const Color.fromARGB(255, 250, 250, 250),
                       ),
-                      color: Color.fromARGB(255, 250, 250, 250),
-                    ),
-                    child: ListView.separated(
-                        itemBuilder: (context, index) => HomeTile(
-                              title: _tiles[index].tileName,
-                              tileColor: _tiles[index].tileColor,
-                              icon: _tiles[index].tileIcon,
-                            ),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                        itemCount: _tiles.length)),
+                      child: ListView.separated(
+                          itemBuilder: (context, index) => HomeTile(
+                                title: _tiles[index].tileName,
+                                tileColor: _tiles[index].tileColor,
+                                icon: _tiles[index].tileIcon,
+                              ),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
+                          itemCount: _tiles.length));
+                }),
               ),
             )
           ],

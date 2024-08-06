@@ -1,6 +1,9 @@
+import 'package:demo_app/bloc/theme_bloc/theme_bloc.dart';
+import 'package:demo_app/bloc/theme_bloc/theme_state.dart';
 import 'package:demo_app/widgets/attendance_card.dart';
 import 'package:demo_app/widgets/decorated_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class AttendanceSummary extends StatelessWidget {
@@ -52,10 +55,15 @@ class AttendanceSummary extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Text(
-            DateFormat('dd MMMM yyyy').format(DateTime.now()),
-            style: const TextStyle(color: Colors.black26),
-          ),
+          BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+            return Text(
+              DateFormat('dd MMMM yyyy').format(DateTime.now()),
+              style: TextStyle(
+                  color: state.themeMode == ThemeMode.dark
+                      ? Colors.white70
+                      : Colors.black26),
+            );
+          }),
         ],
       ),
       child: GridView.count(

@@ -10,16 +10,18 @@ class ChartBloc extends Bloc<ChartEvent, ChartState>{
         isLoading: true,
         errorMessage: null,
         hours: null,
+        week: null
       ),);
 
       try{
         final chartData = await EmployeeApi().fetchChartData(event.employeeId);
-        print(chartData);
+        print(chartData['week']);
         emit(
           ChartState(
             isLoading: false,
             errorMessage: null,
-            hours: chartData,
+            hours: chartData['hours'],
+            week: chartData['week'],
           ),
         );
         
@@ -29,6 +31,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState>{
             isLoading: false,
             errorMessage: 'Failed to laod chart data',
             hours: null,
+            week: null
           ),
         );
       }

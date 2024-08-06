@@ -1,4 +1,8 @@
+import 'package:demo_app/bloc/theme_bloc/theme_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/theme_bloc/theme_bloc.dart';
 
 class DecoratedContainer extends StatelessWidget {
   const DecoratedContainer({
@@ -18,37 +22,43 @@ class DecoratedContainer extends StatelessWidget {
       borderRadius: const BorderRadius.all(
         Radius.circular(24),
       ),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(32),
+      child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(24),
+            ),
+            color: state.themeMode == ThemeMode.dark
+                ? Colors.grey.shade800
+                : const Color.fromARGB(255, 248, 248, 248),
           ),
-          color: Color.fromARGB(255, 248, 248, 248),
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 16.0,
-              ),
-              child: titleRow,
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(20.0),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(24),
-                  ),
-                  color: Colors.white,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16.0,
+                  horizontal: 16.0,
                 ),
-                child: child,
+                child: titleRow,
               ),
-            ),
-          ],
-        ),
-      ),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(24),
+                    ),
+                    color: state.themeMode == ThemeMode.dark
+                        ? Colors.grey.shade900
+                        : Colors.white,
+                  ),
+                  child: child,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

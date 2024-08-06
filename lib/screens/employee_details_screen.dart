@@ -1,5 +1,7 @@
 import 'package:demo_app/bloc/chart_bloc/chart_event.dart';
 import 'package:demo_app/bloc/chart_bloc/chart_state.dart';
+import 'package:demo_app/bloc/theme_bloc/theme_bloc.dart';
+import 'package:demo_app/bloc/theme_bloc/theme_state.dart';
 import 'package:demo_app/widgets/attendance_summary.dart';
 import 'package:demo_app/widgets/button.dart';
 import 'package:demo_app/widgets/working_hour_chart.dart';
@@ -71,57 +73,50 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
       body: BodyContainer(
         child: Column(
           children: [
-            Expanded(
+            const Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 24),
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 24),
                 child: Column(
                   children: [
-                    BlocBuilder<ChartBloc, ChartState>(
-                        builder: (context, chartState) {
-                      if (chartState.isLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (chartState.errorMessage != null) {
-                        return Center(
-                            child: Text(chartState.errorMessage ?? ''));
-                      } else if (chartState.isLoading == false &&
-                          chartState.errorMessage == null) {
-                        return Expanded(
-                            flex: 3,
-                            child: WorkingHourChart(
-                              hours: chartState.hours ?? [],
-                            ));
-                      } else {
-                        return const SizedBox();
-                      }
-                    }),
-                    const SizedBox(height: 16),
-                    const Expanded(flex: 2, child: AttendanceSummary()),
+                    Expanded(
+                      flex: 3,
+                      child: WorkingHourChart(),
+                    ),
+                    SizedBox(height: 16),
+                    Expanded(
+                      flex: 2,
+                      child: AttendanceSummary(),
+                    ),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: const Row(
-                children: [
-                  Expanded(
+            BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+              return Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                    color: state.themeMode == ThemeMode.dark
+                        ? Colors.grey.shade800
+                        : Colors.white),
+                child: const Row(
+                  children: [
+                    Expanded(
+                        child: Button(
+                      buttonText: 'Delete',
+                      isPrimary: false,
+                    )),
+                    SizedBox(width: 16),
+                    Expanded(
                       child: Button(
-                    buttonText: 'Delete',
-                    isPrimary: false,
-                  )),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Button(
-                      buttonText: 'Edit',
-                      isPrimary: true,
+                        buttonText: 'Edit',
+                        isPrimary: true,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )
+                  ],
+                ),
+              );
+            })
           ],
         ),
       ),
