@@ -6,41 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../constants/constants.dart';
+
+// Attendance widget in the employee details screen
 class AttendanceSummary extends StatelessWidget {
   const AttendanceSummary({super.key});
-
-  final List<Map<String, dynamic>> _attendance = const [
-    {
-      'days': 13,
-      'name': 'Present',
-      'color': Colors.blue,
-    },
-    {
-      'days': 0,
-      'name': 'Absent',
-      'color': Colors.orange,
-    },
-    {
-      'days': 4,
-      'name': 'Holiday',
-      'color': Colors.lightGreen,
-    },
-    {
-      'days': 6,
-      'name': 'Half Day',
-      'color': Colors.amber,
-    },
-    {
-      'days': 4,
-      'name': 'Week Off',
-      'color': Colors.purple,
-    },
-    {
-      'days': 3,
-      'name': 'Leave',
-      'color': Colors.lightBlue,
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +44,7 @@ class AttendanceSummary extends StatelessWidget {
         crossAxisSpacing: 10,
         //padding: const EdgeInsets.all(2),
         physics: const NeverScrollableScrollPhysics(),
-        children: _attendance
+        children: attendance
             .map(
               (data) => AttendanceCard(
                 onTapHandler: () {},

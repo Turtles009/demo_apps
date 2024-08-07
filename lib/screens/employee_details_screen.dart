@@ -1,5 +1,4 @@
 import 'package:demo_app/bloc/chart_bloc/chart_event.dart';
-import 'package:demo_app/bloc/chart_bloc/chart_state.dart';
 import 'package:demo_app/bloc/theme_bloc/theme_bloc.dart';
 import 'package:demo_app/bloc/theme_bloc/theme_state.dart';
 import 'package:demo_app/widgets/attendance_summary.dart';

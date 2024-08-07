@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../constants/constants.dart';
+
 final lightTheme = ThemeData(
   scaffoldBackgroundColor: color,
   fontFamily: GoogleFonts.poppins().fontFamily,
@@ -27,5 +29,3 @@ final darkTheme = ThemeData(
   iconTheme: const IconThemeData(color: Colors.white),
   dividerTheme: const DividerThemeData(color: Colors.white),
 );
-
-const color = Color(0xff5e7cec);

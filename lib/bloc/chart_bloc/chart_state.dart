@@ -1,3 +1,4 @@
+// State class to emit new state every time the data changes
 class ChartState {
   final bool isLoading;
   final String? errorMessage;

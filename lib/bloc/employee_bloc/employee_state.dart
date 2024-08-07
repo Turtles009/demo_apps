@@ -1,5 +1,6 @@
 import '../../model/employee_details.dart';
 
+// State class to emit new state every time the data changes
 class EmployeeState {
   final bool isLoading;
   final String? errorMessage;

@@ -2,14 +2,16 @@ import 'package:demo_app/bloc/chart_bloc/chart_state.dart';
 import 'package:demo_app/bloc/theme_bloc/theme_bloc.dart';
 import 'package:demo_app/bloc/theme_bloc/theme_state.dart';
 import 'package:demo_app/helper/time_helper.dart';
-import 'package:demo_app/theme/theme.dart';
+
 import 'package:demo_app/widgets/decorated_container.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/chart_bloc/chart_bloc.dart';
+import '../constants/constants.dart';
 
+//Chart widget in the eployee details screen
 class WorkingHourChart extends StatefulWidget {
   const WorkingHourChart({super.key});
 

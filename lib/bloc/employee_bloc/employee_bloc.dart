@@ -3,6 +3,7 @@ import 'package:demo_app/bloc/employee_bloc/employee_event.dart';
 import 'package:demo_app/bloc/employee_bloc/employee_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Bloc class to fetch employee details and emit state on change
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   EmployeeBloc() : super(const EmployeeState.empty()) {
     on<FetchEmployeeEvent>((event, emit) async {

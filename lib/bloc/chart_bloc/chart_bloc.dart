@@ -3,6 +3,8 @@ import '../../api/employee_api.dart';
 import 'chart_event.dart';
 import 'chart_state.dart';
 
+// bloc to handle chart data recieved from th API
+
 class ChartBloc extends Bloc<ChartEvent, ChartState>{
   ChartBloc() : super(const ChartState.empty()) {
     on<FetchChart>((event, emit) async {
@@ -15,7 +17,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState>{
 
       try{
         final chartData = await EmployeeApi().fetchChartData(event.employeeId);
-        print(chartData['week']);
+        // print(chartData['week']);
         emit(
           ChartState(
             isLoading: false,

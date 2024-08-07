@@ -7,6 +7,7 @@ abstract class ThemeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// Event to toggle between themes
 class ToggleTheme extends ThemeEvent {
   final bool isDarkMode;
 

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:demo_app/model/employee_details.dart';
 import 'package:http/http.dart' as http;
 
-class EmployeeApi {
-  final String baseUrl = 'http://192.168.1.48:5500/api/';
+import '../constants/constants.dart';
 
+class EmployeeApi {
   Future<List<EmployeeDetails>> fetchEmployees() async {
     final response = await http.get(Uri.parse('${baseUrl}employee_api.json'));
     await Future.delayed(const Duration(seconds: 2));
